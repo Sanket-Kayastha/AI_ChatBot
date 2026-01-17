@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><a href="https://www.flaticon.com/free-icons/agent"a>AI Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; }
+        #chat-window { height: 400px; border: 1px solid #ccc; overflow-y: scroll; padding: 10px; margin-bottom: 10px; }
+        .user-msg { color: blue; text-align: right; }
+        .ai-msg { color: green; text-align: left; }
+    </style>
+</head>
+<body>
+    <h2>AI Simple Chatbot</h2>
+    <div id="chat-window"></div>
+    <input type="text" id="user-input" placeholder="Type a message..." style="width: 80%;">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            var msg = $('#user-input').val();
+            $('#chat-window').append('<div class="user-msg"><b>You:</b> ' + msg + '</div>');
+            $('#user-input').val('');
+
+            $.post("/chat", { msg: msg }, function(data) {
+                $('#chat-window').append('<div class="ai-msg"><b>AI:</b> ' + data.response + '</div>');
+                $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);
+            });
+        }
+    </script>
+</body>
+</html>
